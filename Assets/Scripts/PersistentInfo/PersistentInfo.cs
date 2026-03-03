@@ -38,6 +38,9 @@ public class PersistentInfo : MonoBehaviour
         if (!openChests.Contains(chestID))
         {
             openChests.Add(chestID);
+
+            //Guardar cofres abiertos
+            SaveManager.Save(openChests);
         }
     }
 
