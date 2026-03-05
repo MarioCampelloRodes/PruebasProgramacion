@@ -23,6 +23,19 @@ public class PersistentInfo : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        //Añadir función al callback de datos cargados
+        //Este código tan hermoso es una función anónima. Igual que una normal, pero se crea en el momento para añadirla al callback
+        SaveManager.OnDataLoaded += (SaveData saveData) =>
+        {
+            openChests = new List<uint>(saveData.openChestsIDs);
+        };
+
+        //Llamar a la función de cargar datos
+        SaveManager.Load();
+    }
+
     private void Update()
     {
         //DEBUG
