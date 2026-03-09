@@ -6,9 +6,11 @@ using UnityEngine.Events;
 
 
 //Si se va a guardar con JSON, hay que marcar el struct como serializable
+//Lo que previamente era un struct, se ha cambiado a class para poder modificar su valor desde distintos scripts y que se guarde
+//Los structs no se pueden modificar desde otros scripts, ya que al referenciarlos se toma una copia de su valor, no el valor original
 [System.Serializable]
 
-public struct SaveData
+public class SaveData
 {
     public List<uint> openChestsIDs;
 }
@@ -17,16 +19,14 @@ public class SaveManager
 {
     //Nombre del archivo creado y extensión (se puede poner la que sea)
     static string fileName = "Data.mondongo";
+    static SaveData saveData = new SaveData();
 
     public static UnityAction<SaveData> OnDataLoaded;
+    public static UnityAction<SaveData> OnDataSaved;
 
     public static void Save(List<uint> openChests)
     {
-        //Crear unos datos de guardado nuevos
-        SaveData saveData = new SaveData();
-
-        //Asignar a los datos de guardado la lista de cofres abiertos (nueva lista con los mismos valores, sino las cuando cambias una la otra también)
-        saveData.openChestsIDs = new List<uint>(openChests);
+        OnDataSaved?.Invoke(saveData);
 
         //Transformar el SaveData en un string con formato JSON
         string dataJson = JsonUtility.ToJson(saveData);
@@ -41,6 +41,7 @@ public class SaveManager
         File.WriteAllText(filePath, dataJson);
     }
 
+    [RuntimeInitializeOnLoadMethod] //Esta función se llama después del awake, como si estuviera en Start()
     public static void Load()
     {
         string filePath = Path.Combine(Application.persistentDataPath, fileName);

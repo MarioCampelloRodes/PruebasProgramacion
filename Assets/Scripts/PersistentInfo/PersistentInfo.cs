@@ -15,6 +15,13 @@ public class PersistentInfo : MonoBehaviour
             //Cuando no hay nadie como Singleton, se asigna y se marca para no destruirse entre escenas
             Singleton = this;
             DontDestroyOnLoad(this.gameObject);
+
+            //Añadir función al callback de datos cargados
+            //Este código tan hermoso es una función anónima. Igual que una normal, pero se crea en el momento para añadirla al callback
+            SaveManager.OnDataLoaded += (SaveData saveData) =>
+            {
+                openChests = new List<uint>(saveData.openChestsIDs);
+            };
         }
         else
         {
@@ -25,24 +32,7 @@ public class PersistentInfo : MonoBehaviour
 
     private void Start()
     {
-        //Añadir función al callback de datos cargados
-        //Este código tan hermoso es una función anónima. Igual que una normal, pero se crea en el momento para añadirla al callback
-        SaveManager.OnDataLoaded += (SaveData saveData) =>
-        {
-            openChests = new List<uint>(saveData.openChestsIDs);
-        };
-
-        //Llamar a la función de cargar datos
-        SaveManager.Load();
-    }
-
-    private void Update()
-    {
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-        }
+        SaveManager.OnDataSaved += Save;
     }
 
     public void AddOpenChests(uint chestID)
@@ -55,6 +45,13 @@ public class PersistentInfo : MonoBehaviour
             //Guardar cofres abiertos
             SaveManager.Save(openChests);
         }
+    }
+
+    //Se añade al callback de guardar info
+    void Save(SaveData saveData)
+    {
+        //Actualizar los datos de guardado con la lista de cofres abiertos
+        saveData.openChestsIDs = new List<uint>(openChests);
     }
 
     public bool IsChestOpen(uint chestID)
