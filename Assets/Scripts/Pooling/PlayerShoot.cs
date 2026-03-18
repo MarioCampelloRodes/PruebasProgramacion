@@ -13,6 +13,8 @@ public class PlayerShoot : MonoBehaviour
 
     [SerializeField] private Transform shootOrigin;
 
+    [SerializeField] private float shootForce = 6f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,12 +49,14 @@ public class PlayerShoot : MonoBehaviour
         projectile.transform.position = shootOrigin.position;
 
         //Añadir fuerza al proyectil
+        projectile.Shoot(shootOrigin.forward * shootForce);
 
     }
 
     //Se llama cada vez que un proyectil vuelve al bool
     private void ReleaseProjectile(PlayerProjectile projectile)
     {
+        projectile.ResetVelocity();
         projectile.gameObject.SetActive(false);
     }
 

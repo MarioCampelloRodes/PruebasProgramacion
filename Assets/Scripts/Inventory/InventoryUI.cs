@@ -89,4 +89,29 @@ public class InventoryUI : MonoBehaviour
             Destroy(itemToDelete.gameObject);
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.I))
+        {
+            EnableDisableInventory();
+        }
+    }
+
+    void EnableDisableInventory()
+    {
+        if (!itemLayout.gameObject.activeSelf)
+        {
+            //Asegurarnos de que su escala sea 0 al principio
+            itemLayout.localScale = Vector3.zero;
+            itemLayout.gameObject.SetActive(true);
+
+            //Tween para animación de escala
+            itemLayout.LeanScale(Vector3.one, 0.5f).setEaseOutBack();
+        }
+        else
+        {
+            itemLayout.LeanScale(Vector3.zero, 0.3f).setEaseInBack().setOnComplete(() => itemLayout.gameObject.SetActive(false));
+        }
+    }
 }
