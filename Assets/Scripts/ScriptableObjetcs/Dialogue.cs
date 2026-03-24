@@ -15,6 +15,12 @@ public class Dialogue : ScriptableObject
     {
         return lines[index].text;
     }
+
+    //Devuelve el personaje que esté diciendo una línea en concreto
+    public DialogueCharacter GetCharacter(int index)
+    {
+        return lines[index].whoSaysThis == DialogueCharacterType.Character1 ? character1 : character2;
+    }
 }
 
 [System.Serializable]
