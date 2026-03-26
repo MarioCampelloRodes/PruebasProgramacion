@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -25,9 +24,26 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TMP_Text dialogueLineTxt;
 
     private int currentLine = 0;
+    private Canvas canvas;
+
 
     private void Start()
     {
+        canvas = GetComponent<Canvas>();
+
+        //Desactivar canvas al inicio por si las moscas
+        canvas.enabled = false;
+    }
+
+    public void BeginDialogue(Dialogue dialogue)
+    {
+        //Asignar el nuevo diálogo a reproducir
+        currentDialogue = dialogue;
+        //Reiniciar la línea actual antes de empezar un nuevo diálogo
+        currentLine = 0;
+        //Activar el canvas
+        canvas.enabled = true;
+        //Mostrar la primera linea de dialogo
         ShowDialogueLine();
     }
 
@@ -46,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         //Si ha llegado a la última línea de diálogo, se cierra
         if (currentLine >= currentDialogue.lines.Count -1)
         {
-
+            EndDialogue();
             return;
         }
 
@@ -54,9 +70,15 @@ public class DialogueManager : MonoBehaviour
         ShowDialogueLine();
     }
 
+    void EndDialogue()
+    {
+        currentDialogue = null;
+        canvas.enabled = false;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && currentDialogue != null)
         {
             NextLine();
         }

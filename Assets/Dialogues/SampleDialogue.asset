@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character1:
     name: Johnny
-    icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: 21300000, guid: 2e84bf771ca9a8c49ab91bb273fdcdf1, type: 3}
   character2:
     name: Ikal
-    icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: 21300000, guid: 91e7dfa972f8bb543b7d75d62e37aa6d, type: 3}
   lines:
   - text: "No puedes hacerle esto a tu pueblo... \xA1Sabes que no es lo correcto!"
     whoSaysThis: 0
@@ -27,5 +27,6 @@ MonoBehaviour:
   - text: "\xA1Podemos salvar a todos! \xBFNo ves lo lejos que hemos llegado? Voy
       a hacer que entres en raz\xF3n cueste lo que cueste..."
     whoSaysThis: 0
-  - text: "Terminemos esto r\xE1pido entonces."
+  - text: "Las tropas de Nyuxh se aproximan... Tendr\xE9 que expulsarte a la fuerza,
+      muy a mi pesar..."
     whoSaysThis: 1
