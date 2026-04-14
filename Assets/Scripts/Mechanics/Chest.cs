@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chest : MonoBehaviour
+public class Chest : MonoBehaviour, IInteractable
 {
     [SerializeField] private uint chestID;
     [SerializeField] private bool isOpen;
     [SerializeField] private Material openMat;
+    [SerializeField] private ItemInfo itemToAdd;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +18,9 @@ public class Chest : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Interact()
     {
-        if (other.CompareTag("Player") && !isOpen)
-        {
-            Open();
-        }
+        Open();
     }
 
     void Open()
@@ -31,6 +29,8 @@ public class Chest : MonoBehaviour
         GetComponent<Renderer>().material = openMat;
         //Al abrir el cofre, se añade a la lista de abiertos
         PersistentInfo.Singleton.AddOpenChests(chestID);
+
+        Inventory.Instance.AddItem(itemToAdd);
     }
 
     void SetOpen()

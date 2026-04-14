@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class ItemPickup : MonoBehaviour, IInteractable
 {
     public ItemInfo item;
 
-   void OnTriggerEnter(Collider other)
+    public void Interact()
     {
-        if (other.CompareTag("Player"))
-        {
-            Inventory.Instance.AddItem(item);
-        }
+        Inventory.Instance.AddItem(item);
     }
 }

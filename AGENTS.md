@@ -2,7 +2,7 @@
 - Project name: PruebasProgramacion
 - Unity version: Unity 2022.3.62f1
 - Active game object:
-  - Name: Capsule
+  - Name: Chest (1)
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Interactable
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

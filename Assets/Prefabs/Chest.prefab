@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 715736199073736520}
   - component: {fileID: 7600917563619656215}
   - component: {fileID: 5580169894741202933}
-  - component: {fileID: 8988996959198032865}
   - component: {fileID: 1792203995491369880}
   - component: {fileID: 5934903764573433238}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,27 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8988996959198032865
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9169202744748158566}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.517878, y: 2.68, z: 1.67}
-  m_Center: {x: -0.758939, y: 0, z: 0}
 --- !u!114 &1792203995491369880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3e21cea58241c4db3db215cf2aaa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestID: 1
+  chestID: 2
   isOpen: 0
   openMat: {fileID: 2100000, guid: 981617633afb6954194960376ad62337, type: 2}
 --- !u!65 &5934903764573433238
