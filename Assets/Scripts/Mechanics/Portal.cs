@@ -17,6 +17,7 @@ public class Portal : MonoBehaviour
             //Para buscar los setEases, it a la página easings.net. Sirven para cambiar la curva de animación
             //El setOnComplete es un callback al que se le añade una función que ejecutar al terminar el tween
             door.LeanRotateY(145f, 2f).setEaseOutBounce().setOnComplete(ChangeScene);
+            SceneTransitions.Singleton.FadeIn();
         }
     }
 

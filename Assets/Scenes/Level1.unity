@@ -3683,6 +3683,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_ThirdPerson
       objectReference: {fileID: 0}
+    - target: {fileID: 8137114144184799351, guid: 69aa1a23c850df944b455af7617c7b26, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6481211580119093467, guid: 69aa1a23c850df944b455af7617c7b26, type: 3}

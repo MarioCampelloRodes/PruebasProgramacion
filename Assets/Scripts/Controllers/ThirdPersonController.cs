@@ -10,6 +10,7 @@ public class ThirdPersonController : MonoBehaviour
     public float camXRot = 0f;
     public float jumpForce = 10f;
     public bool isGrounded = true;
+    private bool canMove = true;
     //El pivote de la camara que tiene que rotar en el eje X
     public Transform cameraPivot;
 
@@ -38,10 +39,29 @@ public class ThirdPersonController : MonoBehaviour
 
         //Añadir la función del consumible al Callback de Consumible Utilizado
         ConsumableSystem.onConsumableUsed += ConsumibleUsed;
+
+        DialogueManager.singleton.onDialogueStart += DisableControl;
+        DialogueManager.singleton.onDialogueEnd += EnableControl;
+
+        //Funciones locales para los callbacks que quitan el control
+        void EnableControl(Dialogue dialogue)
+        {
+            canMove = true;
+        }
+
+        void DisableControl(Dialogue dialogue)
+        {
+            canMove = false;
+        }
     }
 
     void Update()
     {
+        if (!canMove)
+        {
+            input = Vector3.zero;
+            return;
+        }
         float _horizontal = Input.GetAxisRaw("Horizontal");
         float _vertical = Input.GetAxisRaw("Vertical");
         //Guardamos el input para usarlo en FixedUpdate

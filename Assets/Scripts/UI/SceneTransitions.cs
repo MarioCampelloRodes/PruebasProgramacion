@@ -25,7 +25,8 @@ public class SceneTransitions : MonoBehaviour
     {
         fadeScreen.alpha = 0f;
         fadeScreen.gameObject.SetActive(true);
-        fadeScreen.LeanAlpha(1f, 1f);
+        fadeScreen.LeanAlpha(1f, 1f).setDelay(0.5f);
+        LeanTween.delayedCall(2f, FadeOut);
     }
 
     public void FadeOut()

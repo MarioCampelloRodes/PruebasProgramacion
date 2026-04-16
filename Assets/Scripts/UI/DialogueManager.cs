@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -25,6 +26,10 @@ public class DialogueManager : MonoBehaviour
 
     private int currentLine = 0;
     private Canvas canvas;
+    private bool inDialogue = false;
+
+    public UnityAction<Dialogue> onDialogueStart;
+    public UnityAction<Dialogue> onDialogueEnd;
 
 
     private void Start()
@@ -43,8 +48,14 @@ public class DialogueManager : MonoBehaviour
         currentLine = 0;
         //Activar el canvas
         canvas.enabled = true;
-        //Mostrar la primera linea de dialogo
+
+        inDialogue = true;
+
+        //Mostrar la primera linea de diálogo
         ShowDialogueLine();
+
+        //Llamar al callback de diálogo iniciado
+        onDialogueStart?.Invoke(dialogue);
     }
 
     void ShowDialogueLine()
@@ -74,6 +85,8 @@ public class DialogueManager : MonoBehaviour
     {
         currentDialogue = null;
         canvas.enabled = false;
+
+        onDialogueEnd?.Invoke(currentDialogue);
     }
 
     private void Update()
@@ -82,5 +95,13 @@ public class DialogueManager : MonoBehaviour
         {
             NextLine();
         }
+    }
+
+    //Callback que se llama al cambiar de escena
+    private void OnLevelWasLoaded(int level)
+    {
+        //Eliminar todo lo que haya guardado en los callbacks cada vez que cambie de escena
+        onDialogueStart = null;
+        onDialogueEnd = null;
     }
 }
