@@ -8,33 +8,30 @@ public class Inventory : MonoBehaviour
 {
     Dictionary<string, uint> items = new Dictionary<string, uint>(); //uint es un int sin signo (siempre +)
 
-    public static Inventory Instance;
 
     //public UnityEvent<ItemInfo> onAddItem; //Evento que envía información de tipo ItemInfo y se ve en el Inspector
 
-    //Callback -> Actión que se ejecuta cuando se añada un objeto
+    //Callback -> Acción que se ejecuta cuando se añada un objeto
     //  Pasa como parámetro la info del objeto añadido y qué cantidad de ese objeto hay
     public UnityAction<ItemInfo, uint> onAddedItem;
     public UnityAction<ItemInfo, uint> onRemovedItem;
 
+    public static Inventory Instance;
     void Awake() //Singleton para acceder al código desde otros scripts
     {
         if (Instance == null) 
             Instance = this;
+
+        //Añadir función al callback de cargar info
+        SaveManager.OnDataLoaded += LoadItems;
     }
 
-    void Start()
+    private void Start()
     {
-        
+        //Añadir función al callback de guardar info
+        SaveManager.OnDataSaved += SaveItems;
     }
 
-    private void Update()
-    {
-        foreach (var item in items)
-        {
-            Debug.Log($"Nombre: {item.Key}, Cantidad = {item.Value}");
-        }
-    }
 
     public void AddItem(ItemInfo item)
     {
@@ -58,7 +55,10 @@ public class Inventory : MonoBehaviour
 
         //Ejecutar el callback de que se ha añadido un nuevo objeto, y pasa su información
         //El operador ? comprueba si hay acciones dentro del callback, sino no hace nada.
-        onAddedItem?.Invoke(item, items[item.itemName]); 
+        onAddedItem?.Invoke(item, items[item.itemName]);
+
+        //Llamar a la función de guardar
+        SaveManager.Save();
     }
 
     public void RemoveItem(ItemInfo item)
@@ -96,5 +96,23 @@ public class Inventory : MonoBehaviour
     public bool HasItem(ItemInfo itemToFind)
     {
         return items.ContainsKey(itemToFind.itemName);
+    }
+
+    void SaveItems(SaveData saveData)
+    {
+        List<ItemSaveData> itemsToSave = new List<ItemSaveData>();
+
+        foreach (var item in items)
+        {
+            ItemSaveData itemData = new ItemSaveData(item.Key, item.Value);
+            itemsToSave.Add(itemData);
+        }
+
+        saveData.items = new List<ItemSaveData>(itemsToSave);
+    }
+
+    void LoadItems(SaveData loadedData)
+    {
+
     }
 }

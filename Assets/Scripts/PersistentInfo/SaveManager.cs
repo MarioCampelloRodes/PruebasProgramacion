@@ -13,6 +13,24 @@ using UnityEngine.Events;
 public class SaveData
 {
     public List<uint> openChestsIDs;
+
+    //Lista de información de los objetos que tengamos
+    public List<ItemSaveData> items;
+}
+
+//Como no se pueden serializar los diccionarios, usamos esta estructura para guardar la info de los objetos (nombre y cantidad) en una lista
+[System.Serializable]
+public class ItemSaveData
+{
+    public string name;
+    public uint amount;
+
+    //Metodo constructor
+    public ItemSaveData(string _name, uint _amount) 
+    {
+        name = _name;
+        amount = _amount;
+    }
 }
 
 public class SaveManager
@@ -24,7 +42,7 @@ public class SaveManager
     public static UnityAction<SaveData> OnDataLoaded;
     public static UnityAction<SaveData> OnDataSaved;
 
-    public static void Save(List<uint> openChests)
+    public static void Save()
     {
         OnDataSaved?.Invoke(saveData);
 
