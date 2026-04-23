@@ -113,6 +113,15 @@ public class Inventory : MonoBehaviour
 
     void LoadItems(SaveData loadedData)
     {
+        //Por cada objeto guardado en la lista, creamos y añadimos uno nuevo al diccionario
+        foreach (var item in loadedData.items)
+        {
+            items.Add(item.name, item.amount);
+            Debug.Log($"Loaded {item.name} {item.amount} ");
 
+            ItemInfo itemInfo = ItemDatabase.FindItem(item.name);
+            Debug.Log($"Found item: {itemInfo}");
+            onAddedItem?.Invoke(itemInfo, item.amount);
+        }
     }
 }
