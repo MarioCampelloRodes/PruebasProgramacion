@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private ItemUI itemPrefab;
@@ -11,12 +10,15 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] private List<ItemUI> items = new List<ItemUI>();
 
-    void Start()
+    private void Awake()
     {
         //Añadir la función CreateItem al callback del inventario cuando se añade el objeto
-        //  No se necesitan (ItemInfo item) porque la función pilla el parámetro del callback, por tanto debe pedir los mismos parámetros del callback
+        //No se necesitan (ItemInfo item) porque la función pilla el parámetro del callback, por tanto debe pedir los mismos parámetros del callback
         Inventory.Instance.onAddedItem += CreateItem;
+    }
 
+    void Start()
+    {        
         Inventory.Instance.onRemovedItem += DeleteItem;
     }
 
