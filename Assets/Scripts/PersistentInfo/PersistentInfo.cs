@@ -7,6 +7,7 @@ public class PersistentInfo : MonoBehaviour
     public static PersistentInfo Singleton;
 
     [SerializeField] private List<uint> openChests;
+    public string currentSpawnPointID;
 
     private void Awake()
     {
