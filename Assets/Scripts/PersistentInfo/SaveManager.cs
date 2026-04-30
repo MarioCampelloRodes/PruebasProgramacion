@@ -9,13 +9,15 @@ using UnityEngine.Events;
 //Lo que previamente era un struct, se ha cambiado a class para poder modificar su valor desde distintos scripts y que se guarde
 //Los structs no se pueden modificar desde otros scripts, ya que al referenciarlos se toma una copia de su valor, no el valor original
 [System.Serializable]
-
 public class SaveData
 {
     public List<uint> openChestsIDs;
 
     //Lista de información de los objetos que tengamos
     public List<ItemSaveData> items;
+
+    //Escena y posición en la que estaba al iniciar el juego
+    public SceneSaveData sceneSaveData;
 }
 
 //Como no se pueden serializar los diccionarios, usamos esta estructura para guardar la info de los objetos (nombre y cantidad) en una lista
@@ -30,6 +32,19 @@ public class ItemSaveData
     {
         name = _name;
         amount = _amount;
+    }
+}
+
+[System.Serializable]
+public struct SceneSaveData
+{
+    public string name;
+    public Vector3 lastPosition;
+
+    public SceneSaveData(string _name, Vector3 _lastPosition)
+    {
+        name = _name;
+        lastPosition = _lastPosition;
     }
 }
 
@@ -76,7 +91,7 @@ public class SaveManager
         //Desencriptar la información en formato JSON antes de transformarla en SaveData
         dataJson = XOREncryption.EncryptDecrypt(dataJson);
 
-        SaveData saveData = JsonUtility.FromJson<SaveData>(dataJson);
+        saveData = JsonUtility.FromJson<SaveData>(dataJson);
 
         //Una vez está todo cargado, se llama al callback pasando esta información
         OnDataLoaded?.Invoke(saveData);

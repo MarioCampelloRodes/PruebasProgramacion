@@ -49,4 +49,21 @@ public class PlayerSpawnManager : MonoBehaviour
         }
         return null;
     }
+
+    private void OnApplicationQuit()
+    {
+        //Quitar todas las funciones del callback de guardado para que de tiempo a guardar la info de la escena
+        SaveManager.OnDataSaved = null;
+
+        //Añadir al callback la función de guardar info de la escena
+        SaveManager.OnDataSaved += SaveSceneInfo;
+
+        SaveManager.Save();
+
+        void SaveSceneInfo(SaveData saveData)
+        {
+            //Se actualiza la escena guardada con el nombre de la escena actual y la posición en la que se encuentre el player
+            saveData.sceneSaveData = new SceneSaveData(SceneManager.GetActiveScene().name, player.position);
+        }
+    }
 }
